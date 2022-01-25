@@ -18,8 +18,6 @@ type Folder = {
 type List = Folder[];
 
 export default function move(list: List, source: string, destination: string): List {
-  //throw new Error('Not implemented');
-
   /**
    * Errorful Cases
    */
@@ -28,7 +26,8 @@ export default function move(list: List, source: string, destination: string): L
    * Since all ID's are unique we can search the id's in the folders.
    * Array.every() can be used for this purpose to check all the elements.
    */
-  if (!list.every((folder) => folder.id !== source)) {
+  let isFolderMoving = list.every((folder) => folder.id !== source);
+  if (!isFolderMoving) {
     throw new Error('You cannot move a folder');
   }
 
@@ -36,7 +35,8 @@ export default function move(list: List, source: string, destination: string): L
    * Case 2: You cannot specify a file as the destination.
    * If we cannot find the destination in the folder, we specified the file.
    */
-  if (!list.find((folder) => folder.id === destination)) {
+  let isFileDestination = list.find((folder) => folder.id === destination);
+  if (!isFileDestination) {
     throw new Error('You cannot specify a file as the destination');
   }
 
@@ -62,10 +62,9 @@ export default function move(list: List, source: string, destination: string): L
     const destinationFolder = list.find((folder) => folder.id === destination);
 
     // Error Case, if we cannot find the folder to move our file, throw an error.
-    if (!destinationFolder) {
-      throw new Error('There is no such folder to move file');
+    if (destinationFolder) {
+      destinationFolder.files = destinationFolder.files.concat(sourceFileToMove);
     }
-    destinationFolder.files = destinationFolder.files.concat(sourceFileToMove);
   });
   return list;
 }

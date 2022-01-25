@@ -40,5 +40,32 @@ export default function move(list: List, source: string, destination: string): L
     throw new Error('You cannot specify a file as the destination');
   }
 
+  /**
+   * Moving file
+   * While implementing, try to avoid nested if-else
+   */
+  list.forEach((folder) => {
+    const sourceFileIndex = folder.files.findIndex((file) => file.id === source);
+
+    // Error Case
+    if (sourceFileIndex === -1) {
+      throw new Error('There is no such file');
+    }
+
+    // Finding the file
+    let sourceFileToMove = folder.files[sourceFileIndex];
+
+    // Removing file from the array with filter function.
+    folder.files = folder.files.filter((file) => file.id !== source);
+
+    // Identifying destination folder
+    const destinationFolder = list.find((folder) => folder.id === destination);
+
+    // Error Case, if we cannot find the folder to move our file, throw an error.
+    if (!destinationFolder) {
+      throw new Error('There is no such folder to move file');
+    }
+    destinationFolder.files = destinationFolder.files.concat(sourceFileToMove);
+  });
   return list;
 }

@@ -4,19 +4,46 @@
  * These are the objects that should be used for solving the function.
  */
 type File = {
-  id: string,
-  name: string
+  id: string;
+  name: string;
 };
 
 type Folder = {
-  id: string,
-  name: string,
-  files: File[]
-}
+  id: string;
+  name: string;
+  files: File[];
+};
 
 // According to the function signature, list should be Folder[] type.
 type List = Folder[];
 
 export default function move(list: List, source: string, destination: string): List {
-  throw new Error('Not implemented');
+  //throw new Error('Not implemented');
+
+  /**
+   * Errorful Cases
+   */
+  // If the list is empty.
+  if (list.length === 0) {
+    throw new Error('List is empty');
+  }
+
+  /**
+   * Case 2: You cannot move a folder.
+   * Since all ID's are unique we can search the id's in the folders.
+   * Array.every() can be used for this purpose to check all the elements.
+   */
+  if (!list.every((folder) => folder.id !== source)) {
+    throw new Error('You cannot move a folder');
+  }
+
+  /**
+   * Case 3: You cannot specify a file as the destination.
+   * If we cannot find the destination in the folder, we specified the file.
+   */
+  if (!list.find((folder) => folder.id === destination)) {
+    throw new Error('You cannot specify a file as the destination');
+  }
+
+  return list;
 }

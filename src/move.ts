@@ -23,13 +23,8 @@ export default function move(list: List, source: string, destination: string): L
   /**
    * Errorful Cases
    */
-  // If the list is empty.
-  if (list.length === 0) {
-    throw new Error('List is empty');
-  }
-
   /**
-   * Case 2: You cannot move a folder.
+   * Case 1: You cannot move a folder.
    * Since all ID's are unique we can search the id's in the folders.
    * Array.every() can be used for this purpose to check all the elements.
    */
@@ -38,7 +33,7 @@ export default function move(list: List, source: string, destination: string): L
   }
 
   /**
-   * Case 3: You cannot specify a file as the destination.
+   * Case 2: You cannot specify a file as the destination.
    * If we cannot find the destination in the folder, we specified the file.
    */
   if (!list.find((folder) => folder.id === destination)) {

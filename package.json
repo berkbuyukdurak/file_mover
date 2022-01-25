@@ -2,7 +2,7 @@
   "name": "js-question",
   "license": "MIT",
   "scripts": {
-    "test": "jest",
+    "test": "jest --runInBand",
     "lint:tsc": "tsc",
     "lint:eslint": "eslint 'src/**/*.ts'",
     "lint": "yarn lint:tsc && yarn lint:eslint",
